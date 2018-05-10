@@ -7,9 +7,33 @@
     <title>Hangman</title>
     <link rel= "stylesheet" href= "assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href= "assets/javascript/game.js">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+    <div class=container>
+        <div class="row">
+            <h1> HANGMAN: RAP EDITION </h1>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+               <p>image</p>  <!-- <img src="assets/images/"> -->
+                <br><br><br><br><br>
+                <h5>Instructions: Guess the name of the artist! You have 13 attempts!</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="game-body"></div>
+                    <h4 id = "currentWord">Current Word</h4>
+                    <h4 id = "wordBlanks"> </h4>
+                    <h4 id = "wins"> Wins: </h4>
+                    <h4 id = "numbOfGuesses"> Guess Left: </h4>
+                    <h4 id = "alreadyGuessed"> Letters already guessed: </h4>
+            </div>
+        </div>
+    </div>
+
     
+    <script src="assets/javascript/game.js"></script>
+
 </body>
 </html>
