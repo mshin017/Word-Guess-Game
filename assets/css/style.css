@@ -1,12 +1,14 @@
 body {
-    background-color: black;
+    background-image: url("../images/tic-tac-toe.png");
 
 }
-h1 {
+p {
     text-align: center;
     margin: auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-family: 'Bungee Inline', cursive;
+    font-size: 50px;
 }
 .row {
     text-align: center
@@ -17,5 +19,12 @@ h1 {
     border: dotted;
     border-color: black;
     text-align: center;
+    padding: 30px;
     
+}
+
+#images {
+    width: 300px;
+    height: 300px;
+    padding-bottom: 20px;
 }

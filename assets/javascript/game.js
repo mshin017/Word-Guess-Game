@@ -1,6 +1,7 @@
-var words = ["Chance The Rapper", "Kayne West", "Eminem", "Ice Cube", "Drake", "Jay Z", "Tupac", "Dr Dre", 
-"Nicki Minaj", "J Cole", "Cardi B","Kendrick Lamar","ASAP Rocky", "Donald Glover", "Post Malone"];
-
+var object = {
+    words: ["Chance The Rapper", "Kayne West", "Eminem", "Drake", "Nicki Minaj", "J Cole", "Kendrick Lamar", "Donald Glover"],
+    imagePaths: ["assets/images/chance.jpg", "assets/images/kayne.jpg", "assets/images/eminem.jpg", "assets/images/drake.jpg", "assets/images/nicki.jpg", "assets/images/jcole.jpg", "assets/images/kendrick.jpeg", "assets/images/childish.jpg"]
+}
 var wins = 0;
 var losses = 0;
 var numOfGuesses = 13; 
@@ -9,8 +10,10 @@ var guessedLetters = [];
 var gameRunning = false; 
 var underscore = [];
 var randomWord = [];
-var randomWord = words[Math.floor(Math.random() * words.length)];
-console.log(randomWord);
+var index = Math.floor(Math.random() * object.words.length);
+var randomWord = object.words[index]
+var imagepath = object.imagePaths[index];
+
 // Pseudo-Code: GAME start
     //  Press any key to start/restart
     //  Choose a random word 
@@ -27,6 +30,7 @@ console.log(randomWord);
         wrongLetters = [];
         underscore = [];
 
+
         for (var i = 0; i < randomWord.length; i++) {
             if (randomWord[i] === ' ') {
                 underscore.push('    ');
@@ -36,8 +40,7 @@ console.log(randomWord);
             }
             // regular expressions/regex - substrings / split and join
         };
-      
-
+        document.querySelector("#images").src = imagepath;
         document.getElementById("wordBlanks").innerHTML = underscore.join("    ");
         //the default separator is a comma, by putting .join (""), it changes the separator to a space.
 
@@ -54,8 +57,6 @@ console.log(randomWord);
         // if it IS WRONG, reduce avaiable guess by 1 and display the wrong guess 
  
     function letterGuess(letter) {
-        console.log(letter);
-         
         if (gameRunning === true && guessedLetters.indexOf(letter)=== -1){
             guessedLetters.push(letter);
 
