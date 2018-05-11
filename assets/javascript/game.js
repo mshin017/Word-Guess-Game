@@ -1,13 +1,16 @@
-var words = ["Chance The Rapper", "Kayne West", "Eminem", "Ice Cube", "Drake", "Jay Z", "Tupac", "Dr. Dre", 
+var words = ["Chance The Rapper", "Kayne West", "Eminem", "Ice Cube", "Drake", "Jay Z", "Tupac", "Dr Dre", 
 "Nicki Minaj", "J Cole", "Cardi B","Kendrick Lamar","ASAP Rocky", "Donald Glover", "Post Malone"];
 
-var correct = 0;
-var wrong = 0; 
+var wins = 0;
+var losses = 0;
 var numOfGuesses = 13; 
-var wrongGuesses = [];
-var underscore = []
-var randomWord;
-
+var wrongLetters = [];
+var guessedLetters = [];
+var gameRunning = false; 
+var underscore = [];
+var randomWord = [];
+var randomWord = words[Math.floor(Math.random() * words.length)];
+console.log(randomWord);
 // Pseudo-Code: GAME start
     //  Press any key to start/restart
     //  Choose a random word 
@@ -17,21 +20,31 @@ var randomWord;
 
 //FUNCTIONS
     function start () {
-        var randomWord = words[Math.floor(Math.random() * words.length)];
-            console.log(randomWord);
+        //reset
+        gameRunning = true;
+        numOfGuesses = 13;
+        guessedLetters = [];
+        wrongLetters = [];
+        underscore = [];
+
         for (var i = 0; i < randomWord.length; i++) {
-            underscore.push(" __ ");
-            //HOW TO CHANGE SPACES TO SPACES?? -- .replace("_"," ")
-
+            if (randomWord[i] === ' ') {
+                underscore.push('    ');
+            }
+            else {
+                underscore.push(" __ ");
+            }
+            // regular expressions/regex - substrings / split and join
         };
+      
 
-        document.getElementById("wordBlanks").innerHTML = underscore.join(" ");
+        document.getElementById("wordBlanks").innerHTML = underscore.join("    ");
         //the default separator is a comma, by putting .join (""), it changes the separator to a space.
 
         numOfGuesses = 13; 
         wrongGuess =[];
+        document.querySelector("#alreadyGuessed").innerHTML = "Guessed: [ "+ wrongGuess + "]"
 
-        document.getElementById("alreadyGuessed").innerHTML = wrongGuess
 
     };
     // Guessing letters:
@@ -40,39 +53,62 @@ var randomWord;
         // if it IS CORRECT, fill in the blank, where it should match.
         // if it IS WRONG, reduce avaiable guess by 1 and display the wrong guess 
  
-    document.onkeyup = function(event) { 
+    function letterGuess(letter) {
+        console.log(letter);
+         
+        if (gameRunning === true && guessedLetters.indexOf(letter)=== -1){
+            guessedLetters.push(letter);
 
-        var userGuess = event.key.toLowerCase();
-        
-        if (randomWord.indexOf(userGuess) === -1) {
-            console.log('yes');
-            for (var i=0; i < randomWord.length; i++){
-
-                if(userGuess === randomWord[i]) {
-                    //trying to fill in the blank//
-                    userGuess = underscore[i];
-                    win++;
+            for (var i=0; i < randomWord.length; i++) {
+                if (randomWord[i].toLowerCase() === letter.toLowerCase()) {
+                    underscore[i] = randomWord[i]
                 }
             }
+            document.querySelector("#wordBlanks").textContent = underscore.join(' ');
+            Incorrect(letter);
         }
         else {
-            wrongGuess.push(userGuess);
-            numOfGuesses--;
-    
+            if(!gameRunning) {
+                alert("Ready?");
+                GameOver();
+            }
+            else {
+                alert("You've already guessed this letter!");
+            }
         }
     }
-    
-//Restart game
-    // function restart () {
-    //     if (win === randomWord.length) {
-    //         //start all over//
-    //     }
-    //     else if (numOfGuesses === 0) {
-    //         //game ends//
-    //     }
-    // }
-   
 
-//-----------------------------------------------------
-//Execute
-start();
+
+    document.onkeyup = function(event) {
+        if (event.keyCode >= 65 && event.keyCode <=90) {
+            letterGuess(event.key.toLowerCase())
+        }
+    }
+
+
+    function Incorrect(letter) {
+        if (underscore.indexOf(letter.toLowerCase()) === -1 && 
+            underscore.indexOf(letter.toUpperCase())=== -1) {
+                numOfGuesses--
+                wrongLetters.push(letter);     
+
+        }
+        document.querySelector("#alreadyGuessed").innerHTML = "Attempted Letters: [" + wrongLetters + " ]"
+        document.querySelector("#numbOfGuesses").innerHTML = "Guess Left: " + numOfGuesses
+    }
+
+ 
+function GameOver() {
+    if (numOfGuesses === 0) {
+        losses++;
+        alert("YOU LOSE");
+    }
+    else if (randomWord.toLowerCase() === underscore.join('').toLowerCase()) {
+        wins++;
+        alert("YOU WIN");
+    }
+    document.querySelector("#losses").innerHTML = "Losses: " + losses
+    document.querySelector("#wins").innerHTML = "Wins: " + wins
+    start();
+}
+
